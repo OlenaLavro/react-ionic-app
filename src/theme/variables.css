@@ -1,0 +1,12 @@
+:root {
+  /** primary **/
+  --ion-color-primary: #1D201F;
+  /** secondary **/
+  --ion-color-secondary: #5B5B5B;
+  /** tertiary **/
+  --ion-color-tertiary: #33BDE4;
+  /** avatar background **/
+  --ion-color-avatar-bg: #ADE5F4;
+  /**font-family**/
+  --ion-font-family: 'Montserrat'
+}
