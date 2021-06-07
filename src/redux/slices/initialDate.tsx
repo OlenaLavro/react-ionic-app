@@ -48,10 +48,8 @@ export function fetchInitialDateInfo() {
     try {
       const response = db.collection("appointment");
       const data: any = await response.get();
-
-      dispatch(
-        getInitialDateSuccess(JSON.parse(JSON.stringify(data.docs[0].data())))
-      );
+      console.log(data.docs[0].data());
+      dispatch(getInitialDateSuccess(data.docs[0].data()));
     } catch (error) {
       dispatch(getInitialDateFailure());
     }

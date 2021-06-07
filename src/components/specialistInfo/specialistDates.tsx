@@ -99,16 +99,18 @@ const SpecialistDates: React.FC = () => {
   };
 
   //handle changing current slide in time slider
-  const timeChange = async (target: any) => {
-    const swiper = await timeSlides.current.getSwiper();
+  const timeChange = (target: any) => {
+    target.getActiveIndex().then(async (index: any) => {
+      const swiper = await timeSlides.current.getSwiper();
 
-    target.getActiveIndex().then((index: any) => {
       if (swiper.slides[index]) {
         swiper.slides[index].children[0].classList.add("time-slide-active");
         setCurrentIndexOfTime(index);
       }
     });
-    target.getPreviousIndex().then((index: number) => {
+    target.getPreviousIndex().then(async (index: number) => {
+      const swiper = await timeSlides.current.getSwiper();
+
       if (swiper.slides[index]) {
         swiper.slides[index].children[0].classList.remove("time-slide-active");
       }
@@ -118,6 +120,7 @@ const SpecialistDates: React.FC = () => {
   //handler for setting initial active slide in date slider
   const navigateToInitialDate = async (target: any) => {
     target.slideTo(initialDate.currentIndexOfDate).then((index: number) => {});
+    console.log(initialDate);
     setCurrentIndexOfDate(initialDate.currentIndexOfDate);
   };
 
