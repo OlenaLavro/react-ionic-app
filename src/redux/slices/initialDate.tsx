@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./rootReducer";
 import db from "../../firebaseConfig";
-
+// define a type for the slice state
 interface initState {
   loading?: boolean;
   hasErrors?: boolean;
   initialDate?: any;
 }
-
+// define the initial state using that types
 const initialState: initState = {};
 initialState.hasErrors = false;
 initialState.loading = false;
 initialState.initialDate = {};
 
-// A slice for specialists with our 3 reducers
+// a slice for initial date with our 3 reducers
 const initialDateSlice = createSlice({
   name: "initialDate",
   initialState,
@@ -37,10 +37,10 @@ export const { getInitialDate, getInitialDateSuccess, getInitialDateFailure } =
   initialDateSlice.actions;
 
 export const initialDateSelector = (state: RootState) => state.initialDate;
-// The reducer
+// the reducer
 export default initialDateSlice.reducer;
 
-// Asynchronous thunk action
+// asynchronous thunk action
 export function fetchInitialDateInfo() {
   return async (dispatch: (arg0: { payload: any; type: string }) => void) => {
     dispatch(getInitialDate());

@@ -2,18 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./rootReducer";
 import db from "../../firebaseConfig";
 
+// define a type for the slice state
 interface initState {
   loading?: boolean;
   hasErrors?: boolean;
   specialists?: any;
 }
 
+// define the initial state using that types
 const initialState: initState = {};
 initialState.hasErrors = false;
 initialState.loading = false;
 initialState.specialists = {};
 
-// A slice for specialists with our 3 reducers
+// a slice for specialists with our 3 reducers
 const splecialistsSlice = createSlice({
   name: "specialists",
   initialState,
@@ -37,10 +39,10 @@ export const { getSpecialists, getSpecialistsSuccess, getSpecialistsFailure } =
   splecialistsSlice.actions;
 
 export const specialistsSelector = (state: RootState) => state.specialists;
-// The reducer
+// the reducer
 export default splecialistsSlice.reducer;
 
-// Asynchronous thunk action
+// asynchronous thunk action
 export function fetchSpecialistsInfo() {
   return async (dispatch: (arg0: { payload: any; type: string }) => void) => {
     dispatch(getSpecialists());

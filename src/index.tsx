@@ -6,6 +6,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import rootReducer from "./redux/slices/rootReducer";
 
+//creating  store with our rootReducer that contains two reducers
 const store = configureStore({ reducer: rootReducer });
 
 ReactDOM.render(

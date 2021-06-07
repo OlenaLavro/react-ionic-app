@@ -1,14 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import {
-  IonContent,
-  IonPage,
   IonCard,
   IonCardHeader,
-  IonCardTitle,
-  IonThumbnail,
   IonCardContent,
-  IonImg,
   IonGrid,
   IonRow,
   IonCol,
@@ -22,7 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { specialistsSelector } from "../../redux/slices/specialists";
 
-import { calendar, lockClosed } from "ionicons/icons";
+import { calendar } from "ionicons/icons";
 import db from "../../firebaseConfig";
 import {
   fetchInitialDateInfo,
@@ -30,21 +25,26 @@ import {
 } from "../../redux/slices/initialDate";
 
 const SpecialistDates: React.FC = () => {
+  //getting data or error
   const { specialists } = useSelector(specialistsSelector);
   const { initialDate } = useSelector(initialDateSelector);
 
+  //defining states for current slide index
   const [currentIndexOfDate, setCurrentIndexOfDate] = useState<any>(0);
   const [currentIndexOfTime, setCurrentIndexOfTime] = useState<any>(0);
 
+  //getting ref from our sliders
   const datesSlides = useRef<any>(null);
   const timeSlides = useRef<any>(null);
 
+  //  dispatch our thunk when component  first mounts
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchInitialDateInfo());
   }, [dispatch]);
 
+  //function that convert timestamp to object with day, weekday and month properties
   const getDateFromTimeStamp = (timestamp: any) => {
     const weekdays = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
     const months = [
@@ -73,6 +73,7 @@ const SpecialistDates: React.FC = () => {
     };
   };
 
+  //handler for button for making appointment that set data about appointment to Firestore
   const writeAppointmentData = () => {
     db.collection("appointment").doc("0bL75vcBwUcKGenQEhyv").set({
       currentIndexOfDate: currentIndexOfDate,
@@ -80,6 +81,7 @@ const SpecialistDates: React.FC = () => {
     });
   };
 
+  //handle changing current slide in date slider
   const activeChange = async (target: any) => {
     const swiper = await datesSlides.current.getSwiper();
     console.log(initialDate.currentIndexOfDate);
@@ -96,6 +98,7 @@ const SpecialistDates: React.FC = () => {
     });
   };
 
+  //handle changing current slide in time slider
   const timeChange = async (target: any) => {
     const swiper = await timeSlides.current.getSwiper();
 
@@ -112,16 +115,19 @@ const SpecialistDates: React.FC = () => {
     });
   };
 
+  //handler for setting initial active slide in date slider
   const navigateToInitialDate = async (target: any) => {
     target.slideTo(initialDate.currentIndexOfDate).then((index: number) => {});
     setCurrentIndexOfDate(initialDate.currentIndexOfDate);
   };
 
+  //handler for setting initial active slide in time slider
   const navigateToInitialTime = async (target: any) => {
     target.slideTo(initialDate.currentIndexOfTime).then((index: number) => {});
     setCurrentIndexOfTime(initialDate.currentIndexOfTime);
   };
 
+  //slider settings
   const slideOpts = {
     slidesPerView: 3,
     initialSlide: 1,
@@ -145,7 +151,9 @@ const SpecialistDates: React.FC = () => {
           className="date-slides"
           ref={datesSlides}
           options={slideOpts}
+          //emitted after slider initialization
           onIonSlidesDidLoad={(event) => navigateToInitialDate(event.target)}
+          //emitted after the active slide has changed
           onIonSlideDidChange={(event) => {
             activeChange(event.target);
           }}
@@ -172,7 +180,7 @@ const SpecialistDates: React.FC = () => {
             timeChange(event.target);
           }}
           key={
-            //Changing the IonSlides key when the slides list changes
+            //changing the IonSlides key when the slides list changes
             specialists.availableDates &&
             specialists.availableDates[currentIndexOfDate].times
               .map(function (item: any) {
@@ -200,11 +208,13 @@ const SpecialistDates: React.FC = () => {
                 <p>Дата:</p>
                 <p className="appointment-data-current">
                   {specialists.availableDates &&
+                    //get day from current index of date
                     getDateFromTimeStamp(
                       specialists.availableDates[currentIndexOfDate].date
                         .seconds
                     ).day}
                   {specialists.availableDates &&
+                    //get month from current index of date
                     getDateFromTimeStamp(
                       specialists.availableDates[currentIndexOfDate].date
                         .seconds
@@ -215,6 +225,7 @@ const SpecialistDates: React.FC = () => {
                 <p>Время:</p>
                 <p className="appointment-time-current">
                   {specialists.availableDates &&
+                    //get time from current index of time
                     specialists.availableDates[currentIndexOfDate].times[
                       currentIndexOfTime
                     ]}
@@ -226,6 +237,7 @@ const SpecialistDates: React.FC = () => {
                 expand="full"
                 color="tertiary"
                 className="appointment-button"
+                //emitted after the click on the button
                 onClick={() => writeAppointmentData()}
               >
                 ЗАПИСАТЬСЯ НА БЕСПЛАТНУЮ ВСТРЕЧУ

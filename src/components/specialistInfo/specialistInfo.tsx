@@ -16,7 +16,9 @@ import { useSelector } from "react-redux";
 import { specialistsSelector } from "../../redux/slices/specialists";
 
 const SpecialistInfo: React.FC = () => {
+  //getting data about specialist or error from our store
   const { specialists, loading, hasErrors } = useSelector(specialistsSelector);
+
   return (
     <IonCard className="profile-section">
       <IonCardHeader>
