@@ -39,9 +39,9 @@ const SpecialistInfo: React.FC = () => {
               <p className="profile-duration-title">
                 Длительность консультации
               </p>
-              <h2 className="profile-duration-amount">
+              <p className="profile-duration-amount">
                 {specialists.durationOfSession} минут
-              </h2>
+              </p>
             </IonCol>
           </IonRow>
         </IonGrid>

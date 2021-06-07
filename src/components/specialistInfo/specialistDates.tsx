@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { specialistsSelector } from "../../redux/slices/specialists";
 
-import { star } from "ionicons/icons";
+import { calendar, lockClosed } from "ionicons/icons";
 import db from "../../firebaseConfig";
 import {
   fetchInitialDateInfo,
@@ -31,39 +31,35 @@ import {
 
 const SpecialistDates: React.FC = () => {
   const { specialists } = useSelector(specialistsSelector);
+  const { initialDate } = useSelector(initialDateSelector);
+
   const [currentIndexOfDate, setCurrentIndexOfDate] = useState<any>(0);
   const [currentIndexOfTime, setCurrentIndexOfTime] = useState<any>(0);
-  const { initialDate } = useSelector(initialDateSelector);
 
   const datesSlides = useRef<any>(null);
   const timeSlides = useRef<any>(null);
 
-  const dateSlideOpts = {
-    slidesPerView: 3,
-    initialSlide: 1,
+  const dispatch = useDispatch();
 
-    centeredSlides: true,
-  };
-  const timeSlideOpts = {
-    slidesPerView: 3,
-    initialSlide: 1,
-    centeredSlides: true,
-  };
+  useEffect(() => {
+    dispatch(fetchInitialDateInfo());
+  }, [dispatch]);
+
   const getDateFromTimeStamp = (timestamp: any) => {
     const weekdays = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
     const months = [
-      "январь",
-      "февраль",
-      "март",
-      "апрель",
-      "май",
-      "июнь",
-      "июль",
-      "август",
-      "сентябрь",
-      "октябрь",
-      "ноябрь",
-      "декабрь",
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря",
     ];
     const date = new Date(timestamp * 1000);
     const day = date.getDate();
@@ -76,11 +72,13 @@ const SpecialistDates: React.FC = () => {
       month: months[month],
     };
   };
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchInitialDateInfo());
-  }, [dispatch]);
+  const writeAppointmentData = () => {
+    db.collection("appointment").doc("0bL75vcBwUcKGenQEhyv").set({
+      currentIndexOfDate: currentIndexOfDate,
+      currentIndexOfTime: currentIndexOfTime,
+    });
+  };
 
   const activeChange = async (target: any) => {
     const swiper = await datesSlides.current.getSwiper();
@@ -124,11 +122,10 @@ const SpecialistDates: React.FC = () => {
     setCurrentIndexOfTime(initialDate.currentIndexOfTime);
   };
 
-  const writeAppointmentData = () => {
-    db.collection("appointment").doc("0bL75vcBwUcKGenQEhyv").set({
-      currentIndexOfDate: currentIndexOfDate,
-      currentIndexOfTime: currentIndexOfTime,
-    });
+  const slideOpts = {
+    slidesPerView: 3,
+    initialSlide: 1,
+    centeredSlides: true,
   };
   return (
     <IonCard>
@@ -137,8 +134,8 @@ const SpecialistDates: React.FC = () => {
           <IonRow className="possible-date">
             <IonCol className="possible-date-title">Возможная дата</IonCol>
             <IonCol className="possible-date-icons ion-text-right">
-              <IonIcon className="possible-date-icon" icon={star}></IonIcon>
-              <IonIcon className="possible-date-icon" icon={star}></IonIcon>
+              <IonIcon className="possible-date-icon" icon={calendar}></IonIcon>
+              <IonIcon className="possible-date-icon" icon={calendar}></IonIcon>
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -147,7 +144,7 @@ const SpecialistDates: React.FC = () => {
         <IonSlides
           className="date-slides"
           ref={datesSlides}
-          options={dateSlideOpts}
+          options={slideOpts}
           onIonSlidesDidLoad={(event) => navigateToInitialDate(event.target)}
           onIonSlideDidChange={(event) => {
             activeChange(event.target);
@@ -159,10 +156,8 @@ const SpecialistDates: React.FC = () => {
 
               return (
                 <IonSlide className="date-slide " key={date.day}>
-                  <IonItem className="ion-text-center date-slide-weekday">
-                    {date.weekday}
-                  </IonItem>
-                  <IonItem className="date-slide-monthday">{date.day}</IonItem>
+                  <p className="date-slide-weekday">{date.weekday}</p>
+                  <p className="date-slide-monthday"> {date.day}</p>
                 </IonSlide>
               );
             })}
@@ -170,7 +165,7 @@ const SpecialistDates: React.FC = () => {
 
         <IonSlides
           className="time-slides"
-          options={timeSlideOpts}
+          options={slideOpts}
           ref={timeSlides}
           onIonSlidesDidLoad={(event) => navigateToInitialTime(event.target)}
           onIonSlideDidChange={(event) => {
