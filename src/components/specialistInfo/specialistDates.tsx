@@ -17,7 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { specialistsSelector } from "../../redux/slices/specialists";
 
-import { calendar } from "ionicons/icons";
+import { calendar, list } from "ionicons/icons";
 import db from "../../firebaseConfig";
 import {
   fetchInitialDateInfo,
@@ -144,7 +144,11 @@ const SpecialistDates: React.FC = () => {
           <IonRow className="possible-date">
             <IonCol className="possible-date-title">Возможная дата</IonCol>
             <IonCol className="possible-date-icons ion-text-right">
-              <IonIcon className="possible-date-icon" icon={calendar}></IonIcon>
+              <IonIcon
+                className="possible-date-icon"
+                color="tertiary"
+                icon={list}
+              ></IonIcon>
               <IonIcon className="possible-date-icon" icon={calendar}></IonIcon>
             </IonCol>
           </IonRow>
@@ -228,7 +232,7 @@ const SpecialistDates: React.FC = () => {
                     ).month}
                 </p>
               </IonCol>
-              <IonCol className="vf">
+              <IonCol className="appointment-delimiter-container">
                 <p className="appointment-delimiter"></p>
               </IonCol>
               <IonCol className="appointment-time ion-text-center">

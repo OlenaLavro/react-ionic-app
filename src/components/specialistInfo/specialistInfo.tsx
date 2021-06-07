@@ -28,7 +28,7 @@ const SpecialistInfo: React.FC = () => {
       </IonCardHeader>
       <IonCardContent>
         <IonGrid>
-          <IonRow className="ion-align-items-center h">
+          <IonRow className="ion-align-items-center profile-content">
             <IonCol>
               <IonThumbnail className="profile-avatar-container">
                 <IonImg

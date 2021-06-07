@@ -55,7 +55,7 @@
     color: var(--ion-color-primary)
 }
 
-.h {
+.profile-content {
     height: 180px;
     text-align: center;
     display: flex;
@@ -204,7 +204,7 @@
     text-align: center;
 }
 
-.appointment .vf {
+.appointment .appointment-delimiter-container {
     display: flex;
     justify-content: center;
 }
