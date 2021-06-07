@@ -11,7 +11,10 @@ interface initState {
 const initialState: initState = {};
 initialState.hasErrors = false;
 initialState.loading = false;
-initialState.initialDate = {};
+initialState.initialDate = {
+  currentIndexOfDate: 0,
+  currentIndexOfTime: 0,
+};
 
 // a slice for initial date with our 3 reducers
 const initialDateSlice = createSlice({
@@ -48,7 +51,7 @@ export function fetchInitialDateInfo() {
     try {
       const response = db.collection("appointment");
       const data: any = await response.get();
-      console.log(data.docs[0].data());
+      console.log("Data from server", data.docs[0].data());
       dispatch(getInitialDateSuccess(data.docs[0].data()));
     } catch (error) {
       dispatch(getInitialDateFailure());
