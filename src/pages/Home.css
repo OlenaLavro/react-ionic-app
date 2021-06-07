@@ -66,7 +66,7 @@
     padding: 0 16px 16px 16px;
 }
 
-.possible-date-title {
+.possible-date-title, .possible-time .possible-time-title {
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -101,18 +101,16 @@
 .date-slide .date-slide-weekday {
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
     line-height: 24px;
     letter-spacing: 0px;
     text-align: center;
     min-height: 0;
-    color: var(--ion-color-secondary);
 }
 
 .date-slide .date-slide-monthday {
     font-size: 24px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 900;
     line-height: 32px;
     letter-spacing: 0px;
     text-align: center;
@@ -132,10 +130,14 @@
     border: none;
     text-decoration: none;
     border-style: none;
+    border-style: none;
 }
 
-.time-slide-item {
-    font-family: Montserrat;
+.possible-date-icon {
+    color: #c1c1c1;
+}
+
+.time-slide .time-slide-item {
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -143,18 +145,22 @@
     letter-spacing: 0px;
     text-align: center;
     color: #c1c1c1;
+    border-style: none;
 }
 
-.time-slide-active {
-    font-weight: 800;
-    font-size: 28px;
+.time-slide .time-slide-active {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
     line-height: 40px;
-    width: 100px;
+    letter-spacing: 0px;
+    text-align: center;
     color: var( --ion-color-tertiary);
 }
 
 .appointment {
-    padding: 32px;
+    padding: 16px;
     background: #FFFFFF;
     border: 1px solid #EDEFF2;
     box-sizing: border-box;
@@ -168,14 +174,39 @@
     justify-content: center;
 }
 
-.appointment-data-current, .appointment-time-current {
-    font-size: 35px;
+.appointment-data .appointment-data-current, .appointment-time .appointment-time-current {
+    font-family: Montserrat;
+    font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: 0px;
     text-align: center;
     color: var( --ion-color-primary);
+}
+
+.appointment-data .appointment-data-title, .appointment-time .appointment-time-title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: var(--ion-color-secondary);
+}
+
+.appointment-delimiter {
+    width: 2px;
+    height: 56px;
+    background-color: #E5E5E5;
+    ;
+    text-align: center;
+}
+
+.appointment .vf {
+    display: flex;
+    justify-content: center;
 }
 
 .appointment-button {
@@ -189,4 +220,11 @@
     background: #33BDE4;
     border-radius: 4px;
     color: white;
+    font-family: Montserrat;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0px;
+    text-align: center;
 }

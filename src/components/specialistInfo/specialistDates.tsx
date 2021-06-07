@@ -132,8 +132,9 @@ const SpecialistDates: React.FC = () => {
 
   //slider settings
   const slideOpts = {
-    slidesPerView: 3,
+    slidesPerView: 3.5,
     initialSlide: 1,
+
     centeredSlides: true,
   };
   return (
@@ -149,7 +150,7 @@ const SpecialistDates: React.FC = () => {
           </IonRow>
         </IonGrid>
       </IonCardHeader>
-      <IonCardContent>
+      <IonCardContent className="possible-time">
         <IonSlides
           className="date-slides"
           ref={datesSlides}
@@ -173,7 +174,7 @@ const SpecialistDates: React.FC = () => {
               );
             })}
         </IonSlides>
-
+        <p className="possible-time-title">Свободное время</p>
         <IonSlides
           className="time-slides"
           options={slideOpts}
@@ -198,7 +199,9 @@ const SpecialistDates: React.FC = () => {
             ) {
               return (
                 <IonSlide className="time-slide" key={item}>
-                  <IonItem className="time-slide-item">{item}</IonItem>
+                  <p border-style="none" className=" time-slide-item">
+                    {item}
+                  </p>
                 </IonSlide>
               );
             })}
@@ -208,14 +211,15 @@ const SpecialistDates: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonCol className="appointment-data ion-text-center ">
-                <p>Дата:</p>
+                <p className="appointment-data-title">Дата</p>
                 <p className="appointment-data-current">
                   {specialists.availableDates &&
                     //get day from current index of date
                     getDateFromTimeStamp(
                       specialists.availableDates[currentIndexOfDate].date
                         .seconds
-                    ).day}
+                    ).day}{" "}
+                  &nbsp;
                   {specialists.availableDates &&
                     //get month from current index of date
                     getDateFromTimeStamp(
@@ -224,8 +228,11 @@ const SpecialistDates: React.FC = () => {
                     ).month}
                 </p>
               </IonCol>
+              <IonCol className="vf">
+                <p className="appointment-delimiter"></p>
+              </IonCol>
               <IonCol className="appointment-time ion-text-center">
-                <p>Время:</p>
+                <p className="appointment-time-title">Время</p>
                 <p className="appointment-time-current">
                   {specialists.availableDates &&
                     //get time from current index of time
